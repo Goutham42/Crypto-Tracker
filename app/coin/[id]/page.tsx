@@ -55,7 +55,7 @@ export default function CoinPage() {
     try {
       setLoading(true);
 
-      await new Promise((r) => setTimeout(r, 1000));
+      await new Promise((r) => setTimeout(r, 800));
 
       const res = await fetch(`/api/coin/${id}?days=${days}`);
 
@@ -87,7 +87,7 @@ export default function CoinPage() {
     loadData();
   }, [id, days]);
 
-  /* ---------------- LOADING ---------------- */
+  /* ---------- LOADING ---------- */
 
   if (loading) {
     return (
@@ -105,12 +105,12 @@ export default function CoinPage() {
     );
   }
 
-  /* ---------------- UI ---------------- */
+  /* ---------- UI ---------- */
 
   return (
-    <main className="max-w-6xl mx-auto p-4 sm:p-6">
+    <main className="max-w-6xl mx-auto p-4 sm:p-6 overflow-x-hidden">
 
-      {/* Header */}
+      {/* HEADER */}
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
         <Image
@@ -132,7 +132,7 @@ export default function CoinPage() {
         </div>
       </div>
 
-      {/* Stats */}
+      {/* STATS */}
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
 
@@ -167,9 +167,9 @@ export default function CoinPage() {
         />
       </div>
 
-      {/* Chart Filters */}
+      {/* FILTER BUTTONS */}
 
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4 flex-wrap">
         {[7, 30, 90, 365].map((d) => (
           <button
             key={d}
@@ -186,9 +186,9 @@ export default function CoinPage() {
         ))}
       </div>
 
-      {/* Chart */}
+      {/* CHART */}
 
-      <div className="chart-card p-6 rounded-xl">
+      <div className="chart-card p-6 rounded-xl overflow-hidden">
 
         <h2 className="text-lg font-semibold mb-4 text-green-400">
           Price Chart ({days} days)
@@ -197,7 +197,7 @@ export default function CoinPage() {
         <div className="w-full h-72">
 
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chart} margin={{ left: 10, right: 10 }}>
+            <LineChart data={chart} margin={{ top: 5, right: 10, bottom: 0, left: 0 }}>
 
               <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
 
@@ -209,8 +209,8 @@ export default function CoinPage() {
               />
 
               <YAxis
-                width={60}
-                tickFormatter={(v: number) => `$${format(v)}`}
+                width={50}
+                tickFormatter={(v) => `$${format(Number(v))}`}
                 tickLine={false}
                 axisLine={false}
               />
@@ -243,7 +243,7 @@ export default function CoinPage() {
   );
 }
 
-/* ---------------- STAT CARD ---------------- */
+/* ---------- STAT CARD ---------- */
 
 function StatCard({
   label,

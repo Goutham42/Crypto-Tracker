@@ -4,6 +4,13 @@
 /* ROOT THEME VARIABLES */
 /* ------------------------------------------------ */
 
+
+html, body {
+  overflow-x: hidden;
+}
+
+
+
 :root {
 
 --background: #f9fafb;
