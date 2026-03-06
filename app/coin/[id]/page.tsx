@@ -216,7 +216,7 @@ export default function CoinPage() {
               />
 
               <Tooltip
-                formatter={(v: number) => `$${v.toLocaleString()}`}
+                formatter={(v) => `$${Number(v).toLocaleString()}`}
                 contentStyle={{
                   background: "#111",
                   border: "1px solid #22c55e",
