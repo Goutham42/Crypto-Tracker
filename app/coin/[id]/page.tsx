@@ -45,24 +45,23 @@ export default function CoinPage() {
 
   const fetched = useRef(false);
 
+  /* ---------- FORMAT NUMBERS ---------- */
+
   const format = (num: number) =>
     Intl.NumberFormat("en-US", {
       notation: "compact",
       maximumFractionDigits: 2,
     }).format(num);
 
-  async function loadData() {
+  /* ---------- LOAD DATA ---------- */
+
+  const loadData = async () => {
     try {
       setLoading(true);
 
-      await new Promise((r) => setTimeout(r, 800));
-
       const res = await fetch(`/api/coin/${id}?days=${days}`);
 
-      if (!res.ok) {
-        console.warn("API rate limit or error");
-        return;
-      }
+      if (!res.ok) throw new Error("API error");
 
       const data = await res.json();
 
@@ -71,11 +70,11 @@ export default function CoinPage() {
       setCoin(data.coin);
       setChart(data.chart || []);
     } catch (err) {
-      console.error("Client crash:", err);
+      console.error("Fetch error:", err);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -174,8 +173,7 @@ export default function CoinPage() {
           <button
             key={d}
             onClick={() => setDays(d)}
-            className={`px-3 py-1 rounded-lg text-sm font-medium transition
-            ${
+            className={`px-3 py-1 rounded-lg text-sm font-medium transition ${
               days === d
                 ? "bg-green-500 text-black"
                 : "bg-gray-800 text-gray-300 hover:bg-gray-700"
@@ -197,7 +195,10 @@ export default function CoinPage() {
         <div className="w-full h-72">
 
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chart} margin={{ top: 5, right: 10, bottom: 0, left: 0 }}>
+            <LineChart
+              data={chart}
+              margin={{ top: 10, right: 10, bottom: 0, left: -10 }}
+            >
 
               <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
 
@@ -210,13 +211,17 @@ export default function CoinPage() {
 
               <YAxis
                 width={50}
-                tickFormatter={(v) => `$${format(Number(v))}`}
+                tickFormatter={(v: number | string) =>
+                  `$${format(Number(v))}`
+                }
                 tickLine={false}
                 axisLine={false}
               />
 
               <Tooltip
-                formatter={(v) => `$${Number(v).toLocaleString()}`}
+                formatter={(value: number | string) =>
+                  `$${Number(value).toLocaleString()}`
+                }
                 contentStyle={{
                   background: "#111",
                   border: "1px solid #22c55e",
