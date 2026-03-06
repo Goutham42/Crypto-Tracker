@@ -195,51 +195,49 @@ export default function CoinPage() {
         <div className="w-full h-72">
 
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={chart}
-              margin={{ top: 10, right: 10, bottom: 0, left: -10 }}
-            >
+  <LineChart
+    data={chart}
+    margin={{ top: 10, right: 10, bottom: 0, left: -10 }}
+  >
+    <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
 
-              <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
+    <XAxis
+      dataKey="date"
+      tick={{ fontSize: 12 }}
+      tickLine={false}
+      axisLine={false}
+    />
 
-              <XAxis
-                dataKey="date"
-                tick={{ fontSize: 12 }}
-                tickLine={false}
-                axisLine={false}
-              />
+    <YAxis
+      width={50}
+      tickFormatter={(v: number | string | undefined) =>
+        `$${format(Number(v ?? 0))}`
+      }
+      tickLine={false}
+      axisLine={false}
+    />
 
-              <YAxis
-                width={50}
-                tickFormatter={(v: number | string) =>
-                  `$${format(Number(v))}`
-                }
-                tickLine={false}
-                axisLine={false}
-              />
+    <Tooltip
+      formatter={(value: number | string | undefined) =>
+        `$${Number(value ?? 0).toLocaleString()}`
+      }
+      contentStyle={{
+        background: "#111",
+        border: "1px solid #22c55e",
+        borderRadius: "8px",
+      }}
+    />
 
-              <Tooltip
-                formatter={(value: number | string) =>
-                  `$${Number(value).toLocaleString()}`
-                }
-                contentStyle={{
-                  background: "#111",
-                  border: "1px solid #22c55e",
-                  borderRadius: "8px",
-                }}
-              />
-
-              <Line
-                type="monotone"
-                dataKey="price"
-                stroke="#22c55e"
-                strokeWidth={2.5}
-                dot={false}
-                isAnimationActive={false}
-              />
-
-            </LineChart>
-          </ResponsiveContainer>
+    <Line
+      type="monotone"
+      dataKey="price"
+      stroke="#22c55e"
+      strokeWidth={2.5}
+      dot={false}
+      isAnimationActive={false}
+    />
+  </LineChart>
+</ResponsiveContainer>
 
         </div>
       </div>
