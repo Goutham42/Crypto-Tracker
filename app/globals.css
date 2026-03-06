@@ -1,26 +1,368 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------ */
+/* ROOT THEME VARIABLES */
+/* ------------------------------------------------ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+--background: #f9fafb;
+--foreground: #0f172a;
+
+--card-bg: rgba(255,255,255,0.7);
+--card-border: rgba(0,0,0,0.06);
+
+--hover-glow: rgba(34,197,94,0.15);
+
+/* fluid font scaling */
+
+font-size: clamp(14px, 1vw, 18px);
+
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* DARK MODE */
+
+.dark {
+
+--background: radial-gradient(circle at top, #0f172a 0%, #050505 60%);
+--foreground: #e5e7eb;
+
+--card-bg: rgba(20,20,20,0.55);
+--card-border: rgba(34,197,94,0.15);
+
+--hover-glow: rgba(34,197,94,0.25);
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ------------------------------------------------ */
+/* BODY */
+/* ------------------------------------------------ */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+background: var(--background);
+color: var(--foreground);
+
+min-height: 100vh;
+font-family: ui-sans-serif, system-ui;
+
+transition:
+background 0.3s ease,
+color 0.3s ease;
+
+}
+
+/* ------------------------------------------------ */
+/* CONTAINER CONTROL (4K READY) */
+/* ------------------------------------------------ */
+
+.container-responsive {
+
+width: 100%;
+margin: auto;
+
+padding-left: 1rem;
+padding-right: 1rem;
+
+max-width: 1400px;
+
+}
+
+@media (min-width: 1536px) {
+
+.container-responsive {
+
+max-width: 1600px;
+
+}
+
+}
+
+@media (min-width: 2000px) {
+
+.container-responsive {
+
+max-width: 1800px;
+
+}
+
+}
+
+/* ------------------------------------------------ */
+/* GLASS CARD */
+/* ------------------------------------------------ */
+
+.glass {
+
+background: var(--card-bg);
+
+backdrop-filter: blur(14px);
+
+border-radius: 14px;
+
+border: 1px solid var(--card-border);
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.15);
+
+transition: all 0.25s ease;
+
+padding: clamp(14px, 1.5vw, 22px);
+
+}
+
+.dark .glass {
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.6),
+inset 0 1px 0 rgba(255,255,255,0.03);
+
+}
+
+.glass:hover {
+
+border: 1px solid rgba(34,197,94,0.4);
+
+box-shadow:
+0 12px 35px rgba(0,0,0,0.2),
+0 0 12px var(--hover-glow);
+
+}
+
+/* ------------------------------------------------ */
+/* CHART CARD */
+/* ------------------------------------------------ */
+
+.chart-card {
+
+background: linear-gradient(
+135deg,
+rgba(255,255,255,0.8),
+rgba(240,240,240,0.9)
+);
+
+border: 1px solid rgba(0,0,0,0.06);
+
+border-radius: 16px;
+
+padding: clamp(16px, 2vw, 28px);
+
+}
+
+/* DARK MODE */
+
+.dark .chart-card {
+
+background: linear-gradient(
+135deg,
+rgba(20,20,20,0.85),
+rgba(10,10,10,0.95)
+);
+
+border: 1px solid rgba(34,197,94,0.2);
+
+box-shadow:
+0 20px 40px rgba(0,0,0,0.8),
+inset 0 0 15px rgba(34,197,94,0.05);
+
+}
+
+/* ------------------------------------------------ */
+/* TABLE */
+/* ------------------------------------------------ */
+
+table {
+
+width: 100%;
+
+border-collapse: separate;
+border-spacing: 0;
+
+font-size: clamp(13px, 1vw, 15px);
+
+}
+
+tbody tr {
+
+transition: all 0.25s ease;
+
+}
+
+tbody tr:hover {
+
+background: rgba(34,197,94,0.06);
+transform: scale(1);
+
+}
+
+.dark tbody tr:hover {
+
+background: rgba(34,197,94,0.08);
+
+}
+
+/* ------------------------------------------------ */
+/* BUTTONS */
+/* ------------------------------------------------ */
+
+button {
+
+transition: all 0.2s ease;
+
+font-size: clamp(13px, 0.9vw, 15px);
+
+padding: clamp(6px, 0.6vw, 10px)
+clamp(12px, 1vw, 18px);
+
+}
+
+button:hover {
+
+transform: translateY(-1px);
+
+}
+
+/* ACTIVE RANGE BUTTON */
+
+button.bg-green-500 {
+
+background: linear-gradient(
+135deg,
+#22c55e,
+#16a34a
+);
+
+box-shadow:
+0 0 12px rgba(34,197,94,0.5),
+0 0 24px rgba(34,197,94,0.25);
+
+}
+
+/* ------------------------------------------------ */
+/* INPUT FIELD */
+/* ------------------------------------------------ */
+
+input {
+
+width: 100%;
+
+background: rgba(255,255,255,0.9);
+
+border: 1px solid rgba(0,0,0,0.1);
+
+color: #111;
+
+border-radius: 10px;
+
+padding: clamp(8px, 0.8vw, 12px);
+
+font-size: clamp(14px, 1vw, 16px);
+
+}
+
+.dark input {
+
+background: rgba(20,20,20,0.6);
+
+border: 1px solid rgba(34,197,94,0.2);
+
+color: white;
+
+}
+
+input:focus {
+
+outline: none;
+
+border-color: #22c55e;
+
+box-shadow:
+0 0 10px rgba(34,197,94,0.25);
+
+}
+
+/* ------------------------------------------------ */
+/* SCROLLBAR */
+/* ------------------------------------------------ */
+
+::-webkit-scrollbar {
+
+width: 8px;
+
+}
+
+::-webkit-scrollbar-track {
+
+background: #e5e7eb;
+
+}
+
+.dark ::-webkit-scrollbar-track {
+
+background: #0a0a0a;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+background: #9ca3af;
+
+border-radius: 4px;
+
+}
+
+.dark ::-webkit-scrollbar-thumb {
+
+background: #f9fafb;
+
+}
+
+/* ------------------------------------------------ */
+/* MOBILE FIXES (320px support) */
+/* ------------------------------------------------ */
+
+@media (max-width: 480px) {
+
+.glass {
+
+padding: 14px;
+
+}
+
+.chart-card {
+
+padding: 16px;
+
+}
+
+table {
+
+font-size: 13px;
+
+}
+
+}
+
+/* ------------------------------------------------ */
+/* FADE ANIMATION */
+/* ------------------------------------------------ */
+
+@keyframes fadeUp {
+
+from {
+opacity: 0;
+transform: translateY(10px);
+}
+
+to {
+opacity: 1;
+transform: translateY(0);
+}
+
+}
+
+.glass {
+
+animation: fadeUp 0.4s ease;
+
 }
